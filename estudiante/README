@@ -1,0 +1,11 @@
+Instalar Qt5 versiones mayores o iguales Qt5.10
+Usar el comando en linux como root
+	sudo apt-get install qt5-defaults
+
+Dentro de la carpeta quien_es_quien_grafica ejecutar desde la linea de ordenes
+	cmake CMakeLists.txt
+	make 
+Debe crear en  el directorio bin el ejecutable quienesquien. Para ver la modificación grafica ejecutar
+	./bin/quienesquien datos/personajes_graficos.csv datos/Tapada.png
+	
+
