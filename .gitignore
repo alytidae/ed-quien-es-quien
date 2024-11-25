@@ -1,2 +1,7 @@
 estudiante/CMakeCache.txt
 estudiante/CMakeFiles/*
+estudiante/CMakeDoxyfile.in
+estudiante/CMakeDoxygenDefaults.cmake
+estudiante/Doxyfile
+estudiante/Makefile
+estudiante/cmake_install.cmake
