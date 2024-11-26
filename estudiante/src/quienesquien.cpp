@@ -229,14 +229,51 @@ vector<bool> convertir_a_vector_bool(int n, int digitos) {
 /**
 * @brief Esta es una propuesta de cabecera de la funcion para crear el arbol.
 */
-bintree<Pregunta> QuienEsQuien::crear_arbol( vector<string> atributos,
-                                             int indice_atributo,
-                                             vector<string> personajes,
-                                             vector<bool> personajes_restantes,
-                                             vector<vector<bool>> tablero){
 
-     //TODO :D:D
-     bintree<Pregunta> arbol;
+bintree<Pregunta> QuienEsQuien::crear_arbol(vector<string> atributos,
+                                    int indice_atributo,
+                                    vector<string> personajes,
+                                    vector<bool> personajes_restantes,
+                                    vector<vector<bool>> tablero){
+
+     int personajes_restantes_count = 0;
+     int personajes_last_index = -1;
+     for(int i = 0; i < personajes_restantes.size(); i++){
+          if (personajes_restantes[i]){
+               personajes_restantes_count++;
+               personajes_last_index = i;
+          }
+     }
+     if (personajes_restantes_count == 1){
+          return bintree<Pregunta>({personajes[personajes_last_index], 1});
+     }
+     
+     if (indice_atributo >= atributos.size()){
+          return bintree<Pregunta>({"NULL", 0});
+     }
+     string atributo_actual = atributos[indice_atributo];
+     int si_count = 0;
+     int no_count = 0;
+     vector<bool> si_personajes(personajes.size(), 0);
+     vector<bool> no_personajes(personajes.size(), 0);
+
+     for (int i = 0; i < personajes.size(); i++) {
+          if (personajes_restantes[i]) {
+               if (tablero[i][indice_atributo]) {
+                    si_personajes[i] = true;
+                    si_count++;
+               } else {
+                    no_personajes[i] = true;
+                    no_count++;
+               }
+          }
+     }
+     
+     bintree<Pregunta> arbol(Pregunta(atributo_actual, personajes_restantes_count));
+     bintree<Pregunta> a_si = crear_arbol(atributos, indice_atributo+1, personajes, si_personajes, tablero);
+     bintree<Pregunta> a_no = crear_arbol(atributos, indice_atributo+1, personajes, no_personajes, tablero);
+     arbol.insert_left(arbol.root(), a_si);
+     arbol.insert_right(arbol.root(), a_no);
      return arbol;
 }
 
