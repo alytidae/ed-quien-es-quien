@@ -300,6 +300,29 @@ void QuienEsQuien::iniciar_juego(){
     }
     //COMPLETAR AQUI
     
+    // Paso 1
+    arbol.assign_subtree(arbol,jugada_actual);
+    
+    // Paso 2
+    while ( !jugada_actual.left().null() || !jugada_actual.right().null()) {
+    	cout << (*jugada_actual) << endl;
+    	
+    	string respuesta = "";
+    	
+    	cin >> respuesta;
+    	
+    	if ( respuesta == "Si") 
+    		jugada_actual = jugada_actual.left();
+    	else if ( respuesta == "NO" ) 
+    		jugada_actual = jugada_actual.right();
+    	
+    	arbol.assign_subtree(arbol,jugada_actual);
+    }
+    
+    // Paso 3
+    cout << "Nombre del personaje: " 
+         << (*jugada_actual).obtener_personaje() << endl;
+    
     if (modo_graph){
      con->WriteText("Cuando completes QuienEsQuien, este mensaje lo podrás quitar");
      char c;
@@ -316,6 +339,26 @@ void QuienEsQuien::iniciar_juego(){
 set<string> QuienEsQuien::informacion_jugada(bintree<Pregunta>::node jugada_actual){
      //TODO :)
      set<string> personajes_levantados;
+     
+     // Paso 1
+     if (jugada_actual.null()) return personajes_levantados; // devuelve conjunto vacio
+         
+     // Paso 2
+     if ( jugada_actual.left().null() && jugada_actual.right().null() &&
+     		(*jugada_actual).obtener_num_personajes() == 1 ) {
+     	personajes_levantados.insert((*jugada_actual).obtener_personaje());
+     	return personajes_levantados;
+     }
+     
+     // Paso 3
+     set<string> conjuntos_personajes_izquierdo = informacion_jugada(jugada_actual.left()),
+     		 conjuntos_personajes_derecho = informacion_jugada(jugada_actual.right());
+     		 
+     personajes_levantados = conjuntos_personajes_derecho;		 
+     
+     personajes_levantados.insert(conjuntos_personajes_izquierdo.begin(),
+     				  conjuntos_personajes_izquierdo.end());
+     
      return personajes_levantados;
 }
 
@@ -346,6 +389,10 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 //TODO :)
+	//list<int> lista;
+	
+	//if ( 
+
 
      return -1;
 }
