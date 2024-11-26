@@ -5,3 +5,5 @@ estudiante/CMakeDoxygenDefaults.cmake
 estudiante/Doxyfile
 estudiante/Makefile
 estudiante/cmake_install.cmake
+estudiante/bin/
+estudiante/quienesquien_autogen/
