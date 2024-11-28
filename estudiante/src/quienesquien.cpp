@@ -387,14 +387,36 @@ void QuienEsQuien::eliminar_nodos_redundantes(){
 // TODO :)
 }
 
+list<int> recursion_auxiliar( bintree<Pregunta>::node n) {
+	list<int> l;
+	
+	if ( n.null() ) return l;
+	else if ( n.left().null() && n.right().null() ) {
+		l.push_back(0);
+		return l;
+	} else {
+		list<int> li = recursion_auxiliar(n.left()), // hijo izq.
+			  ld = recursion_auxiliar(n.right()); // hijo der.
+			  
+		list<int> lu(li);
+		lu.insert(lu.end(), ld.begin(), ld.end());
+		
+		return lu; // lista union
+	}
+}
+
 float QuienEsQuien::profundidad_promedio_hojas(){
 //TODO :)
-	//list<int> lista;
+	// Paso 1: Recursion con funcion auxiliar
+	list<int> lista = recursion_auxiliar(arbol.root());
 	
-	//if ( 
+	float valor_medio = 0;
+	
+	for (list<int>::iterator it = lista.begin(); it != lista.end(); ++it)
+		valor_medio += *it;
 
 
-     return -1;
+	return valor_medio / lista.size();
 }
 
 /**
