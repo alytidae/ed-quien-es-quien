@@ -482,7 +482,47 @@ void QuienEsQuien::setModoGraph(bool m){
 }
 
 void QuienEsQuien::elimina_personaje(string nombre) {
+	int indice = -1;
 	
+	// buscamos el indice del personaje para obtener las caract.
+	for (int i = 0; i < personajes.size() && indice == -1; i++)
+		if ( personajes[i] == nombre ) indice = i;
+		
+	// caracteristicas del nombre
+	vector<bool> caracteristicas = tablero[indice];
+	
+	// recorremos el arbol hasta encontrar el personaje
+	bintree<Pregunta>::node n = arbol.root();
+	
+	while ( (*n).es_pregunta() ) {
+		string pregunta = (*n).obtener_pregunta();
+	
+		indice = -1;
+		
+		// buscamos el indice de la pregunta
+		for (int i = 0; i < atributos.size() && indice == -1; i++)
+			if ( atributos[i] == pregunta ) indice = i;
+			
+		// true -> mover a la izq. , false -> mover a la dcha.
+		if ( caracteristicas[indice] ) n = n.left();
+		else n = n.right();
+	}
+	
+	bintree<Pregunta>::node nueva_pregunta = n.parent();
+	
+	// si el nodo estaba a la izq., el nuevo padre esta a la dcha.
+	// y viceversa.
+	if ( caracteristicas[indice] ) nueva_pregunta = nueva_pregunta.right();
+	else nueva_pregunta = nueva_pregunta.left();
+	
+	// subarbol nuevo con el nuevo padre
+	bintree<Pregunta> nuevo_arbol;
+	arbol.assign_subtree(nuevo_arbol,nueva_pregunta);
+	
+	// insercion del subarbol
+	if ( indice > 0 && caracteristicas[indice-1]) 
+		arbol.insert_left(n.parent().parent(),nuevo_arbol);
+	else arbol.insert_right(n.parent().parent(),nuevo_arbol);
 }
 
 void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje ) {
