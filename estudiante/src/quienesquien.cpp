@@ -481,4 +481,81 @@ void QuienEsQuien::setModoGraph(bool m){
     modo_graph=m;
 }
 
+void QuienEsQuien::elimina_personaje(string nombre) {
+	
+}
+
+void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje ) {
+	
+	//bintree<Pregunta>::node n = arbol.root();
+
+	// Paso 1
+	if (n.null()) {
+		Pregunta pregunta(nombre,1);
+		arbol = bintree<Pregunta>(pregunta);
+		return;
+	} // Paso 2
+	else if (n.left().null() && n.right().null() && (*n).es_personaje()) {
+		
+		int indice = -1; // indice para encontrar al vector de n
+		
+		// se asume que esta dentro del vector
+		for ( int i = 0; i < personajes.size() && indice == -1; i++) {
+			if ( (*n).obtener_personaje() == personajes[i] )
+				indice = i;
+		}
+		
+		vector<bool> car_per = tablero[indice];
+		
+		indice = -1; // indice ahora es para la pregunta
+		
+		// se asume mismo tamanio
+		for ( int i = 0; i < car_per.size() && indice == -1; i++) {
+			if ( car_per[i] != caracteristicas[i] )
+				indice = i;
+		}
+		
+		Pregunta pregunta_distinta(atributos[indice],2); // 2 por defecto
+		
+		bintree<Pregunta> nuevo_arbol(pregunta_distinta);
+		bintree<Pregunta>::node nuevo(Pregunta(nombre,1)),
+					father(n.parent());
+					
+		int lado = -1; // 0 -> izq. 1 -> dcha.
+		
+		if ( father.left() == n ) lado = 0;
+		else lado = 1;
+		
+		// insertamos hijos izquierda y derecha
+		if ( car_per[indice] ) {
+			nuevo_arbol.insert_right(n,(*n));
+			nuevo_arbol.insert_left(nuevo, (*nuevo));
+		} else {
+			nuevo_arbol.insert_left(n,(*n));
+			nuevo_arbol.insert_right(nuevo, (*nuevo));
+		}
+		
+		if (lado) arbol.insert_right(father, nuevo_arbol);
+		else arbol.insert_left(father, nuevo_arbol);
+	} else { // Paso 3
+		int indice = -1;
+		
+		for (int i = 0; i < atributos.size() && indice == -1; i++)
+			if ( (*n).obtener_pregunta() == atributos[i] ) indice = i;
+		
+		if (caracteristicas[indice]) 
+			aniade_personaje(nombre,caracteristicas,
+						n.left(), nombre_imagen_personaje);
+		else aniade_personaje(nombre,caracteristicas,
+						n.right(), nombre_imagen_personaje);
+	}
+}
+
+
+
+
+
+
+
+
 

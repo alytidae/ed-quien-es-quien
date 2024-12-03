@@ -246,7 +246,14 @@ public:
      */
     void ocultar_personajes_graph(const set<string> &personajes_activos);
 
-
+     /**
+      * @brief Aniade un personaje al arbol sin rehacerlo completo.
+      
+      */
+    void aniade_personaje(string nombre, vector<bool> caracteristicas, 
+    	bintree<Pregunta>::node n, string nombre_imagen_personaje="");
+    	
+    void elimina_personaje(string nombre);
 };
 
 #endif
