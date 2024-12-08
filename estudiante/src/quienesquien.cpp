@@ -301,22 +301,21 @@ void QuienEsQuien::iniciar_juego(){
     //COMPLETAR AQUI
     
     // Paso 1
-    arbol.assign_subtree(arbol,jugada_actual);
+    jugada_actual = arbol.root();
     
     // Paso 2
-    while ( !jugada_actual.left().null() || !jugada_actual.right().null()) {
+    while ( !jugada_actual.null() && (*jugada_actual).obtener_num_personajes() != 1 ) {
     	cout << (*jugada_actual) << endl;
     	
     	string respuesta = "";
     	
     	cin >> respuesta;
     	
-    	if ( respuesta == "Si") 
+    	if ( respuesta == "Si" && !jugada_actual.left().null()) 
     		jugada_actual = jugada_actual.left();
-    	else if ( respuesta == "NO" ) 
+    	else if ( respuesta == "NO" && !jugada_actual.right().null() ) 
     		jugada_actual = jugada_actual.right();
     	
-    	arbol.assign_subtree(arbol,jugada_actual);
     }
     
     // Paso 3
@@ -407,6 +406,7 @@ list<int> recursion_auxiliar( bintree<Pregunta>::node n) {
 
 float QuienEsQuien::profundidad_promedio_hojas(){
 //TODO :)
+
 	// Paso 1: Recursion con funcion auxiliar
 	list<int> lista = recursion_auxiliar(arbol.root());
 	
@@ -417,6 +417,7 @@ float QuienEsQuien::profundidad_promedio_hojas(){
 
 
 	return valor_medio / lista.size();
+
 }
 
 /**
