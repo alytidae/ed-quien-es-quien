@@ -400,6 +400,9 @@ list<int> recursion_auxiliar( bintree<Pregunta>::node n) {
 		list<int> lu(li);
 		lu.insert(lu.end(), ld.begin(), ld.end());
 		
+		for (list<int>::iterator it = lu.begin(); it != lu.end(); ++it)
+			(*it)++;
+		
 		return lu; // lista union
 	}
 }
