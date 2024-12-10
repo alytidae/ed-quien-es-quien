@@ -254,6 +254,9 @@ public:
     	bintree<Pregunta>::node n, string nombre_imagen_personaje="");
     	
     void elimina_personaje(string nombre);
+
+    void eliminar_nodos_redundantes(bintree<Pregunta>::node nodo, bintree<Pregunta>& arbol);
+
 };
 
 #endif

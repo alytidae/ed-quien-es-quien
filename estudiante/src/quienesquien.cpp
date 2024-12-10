@@ -244,13 +244,15 @@ bintree<Pregunta> QuienEsQuien::crear_arbol(vector<string> atributos,
                personajes_last_index = i;
           }
      }
+     
+     if (personajes_restantes_count == 0){
+         return bintree<Pregunta>();
+     }
+     
      if (personajes_restantes_count == 1){
           return bintree<Pregunta>({personajes[personajes_last_index], 1});
      }
      
-     if (indice_atributo >= atributos.size()){
-          return bintree<Pregunta>({"NULL", 0});
-     }
      string atributo_actual = atributos[indice_atributo];
      int si_count = 0;
      int no_count = 0;
@@ -275,6 +277,65 @@ bintree<Pregunta> QuienEsQuien::crear_arbol(vector<string> atributos,
      arbol.insert_left(arbol.root(), a_si);
      arbol.insert_right(arbol.root(), a_no);
      return arbol;
+}
+
+void QuienEsQuien::eliminar_nodos_redundantes(bintree<Pregunta>::node nodo, bintree<Pregunta>& arbol) {
+    if (nodo.null()) {
+        return; 
+    }
+    
+    if (nodo.left().null() && nodo.right().null()) {
+        return;
+    }
+    
+    if (!nodo.left().null() && !nodo.right().null()) {
+        eliminar_nodos_redundantes(nodo.left(), arbol);
+        eliminar_nodos_redundantes(nodo.right(), arbol);
+    }
+
+    if (!nodo.left().null() && nodo.right().null()) {
+        bintree<Pregunta> subarbol_izquierdo;
+        arbol.prune_left(nodo, subarbol_izquierdo);
+
+        if (nodo == arbol.root()) { 
+            arbol.assign_subtree(subarbol_izquierdo, subarbol_izquierdo.root());
+        } else {
+            auto padre = nodo.parent();
+            if (padre.left() == nodo) {
+                arbol.insert_left(padre, subarbol_izquierdo);
+                eliminar_nodos_redundantes(padre.left(), arbol);
+            } else {
+                arbol.insert_right(padre, subarbol_izquierdo);
+                eliminar_nodos_redundantes(padre.right(), arbol);
+            }
+        }
+        return;
+    }
+   
+    if (!nodo.right().null() && nodo.left().null()) {
+        bintree<Pregunta> subarbol_derecho;
+        arbol.prune_right(nodo, subarbol_derecho);
+
+        if (nodo == arbol.root()) { 
+            arbol.assign_subtree(subarbol_derecho, subarbol_derecho.root());
+        } else {
+            auto padre = nodo.parent();
+            if (padre.left() == nodo) {
+                arbol.insert_left(padre, subarbol_derecho);
+                eliminar_nodos_redundantes(padre.left(), arbol);
+            } else {
+                arbol.insert_right(padre, subarbol_derecho);
+                eliminar_nodos_redundantes(padre.right(), arbol);
+            }
+        }
+        return;
+    }
+}
+
+void QuienEsQuien::eliminar_nodos_redundantes() {
+    if (!arbol.empty()) {
+        eliminar_nodos_redundantes(arbol.root(), arbol);
+    }
 }
 
 bintree<Pregunta> QuienEsQuien::crear_arbol(){
@@ -380,10 +441,6 @@ void escribir_esquema_arbol(ostream& ss, const bintree <Pregunta>& a,
 void QuienEsQuien::escribir_arbol_completo() const{
      string pre = "";
      escribir_esquema_arbol(cout,this->arbol,this->arbol.root(),pre);
-}
-
-void QuienEsQuien::eliminar_nodos_redundantes(){
-// TODO :)
 }
 
 list<int> recursion_auxiliar( bintree<Pregunta>::node n) {
