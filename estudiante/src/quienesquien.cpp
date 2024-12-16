@@ -279,6 +279,94 @@ bintree<Pregunta> QuienEsQuien::crear_arbol(vector<string> atributos,
      return arbol;
 }
 
+float calcular_entropia(int si_count, int no_count) {
+    int total = si_count + no_count;
+    if (total == 0) return 0;
+
+    float p_si = static_cast<float>(si_count) / total;
+    float p_no = static_cast<float>(no_count) / total;
+
+    float entropia = 0;
+    if (p_si > 0) entropia -= p_si * log2(p_si);
+    if (p_no > 0) entropia -= p_no * log2(p_no);
+
+    return entropia;
+}
+
+bintree<Pregunta> QuienEsQuien::crear_arbol_inteligente(vector<string> atributos,
+                                    int indice_atributo,
+                                    vector<string> personajes,
+                                    vector<bool> personajes_restantes,
+                                    vector<vector<bool>> tablero){
+    
+    int personajes_restantes_count = 0;
+    int personajes_last_index = -1;
+    for (int i = 0; i < personajes_restantes.size(); ++i) {
+        if (personajes_restantes[i]) {
+            personajes_restantes_count++;
+            personajes_last_index = i;
+        }
+    }
+
+    if (personajes_restantes_count == 0) {
+        return bintree<Pregunta>();
+    }
+
+    if (personajes_restantes_count == 1) {
+        return bintree<Pregunta>({personajes[personajes_last_index], 1});
+    }
+
+    float max_entropia = -1;
+    int mejor_atributo = -1;
+
+    for (int i = 0; i < atributos.size(); ++i) {
+        int si_count = 0;
+        int no_count = 0;
+
+        for (int j = 0; j < personajes.size(); ++j) {
+            if (personajes_restantes[j]) {
+                if (tablero[j][i]) {
+                    si_count++;
+                } else {
+                    no_count++;
+                }
+            }
+        }
+        
+        float entropia = calcular_entropia(si_count, no_count);
+
+        if (entropia > max_entropia) {
+            max_entropia = entropia;
+            mejor_atributo = i;
+        }
+    }
+
+    string atributo_actual = atributos[mejor_atributo];
+    vector<bool> si_personajes(personajes.size(), false);
+    vector<bool> no_personajes(personajes.size(), false);
+
+    for (int i = 0; i < personajes.size(); ++i) {
+        if (personajes_restantes[i]) {
+            if (tablero[i][mejor_atributo]) {
+                si_personajes[i] = true;
+            } else {
+                no_personajes[i] = true;
+            }
+        }
+    }
+
+    bintree<Pregunta> arbol(Pregunta(atributo_actual, personajes_restantes_count));
+    bintree<Pregunta> a_si = crear_arbol_inteligente(atributos, mejor_atributo + 1, personajes, si_personajes, tablero);
+    bintree<Pregunta> a_no = crear_arbol_inteligente(atributos, mejor_atributo + 1, personajes, no_personajes, tablero);
+
+    arbol.insert_left(arbol.root(), a_si);
+    arbol.insert_right(arbol.root(), a_no);
+
+    return arbol;
+}
+
+
+
 void QuienEsQuien::eliminar_nodos_redundantes(bintree<Pregunta>::node nodo, bintree<Pregunta>& arbol) {
     if (nodo.null()) {
         return; 

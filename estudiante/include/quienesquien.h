@@ -99,6 +99,14 @@ private:
                                     vector<string> personajes,
                                     vector<bool> personajes_restantes,
                                     vector<vector<bool>> tablero);
+
+   	 bintree<Pregunta> crear_arbol_inteligente(vector<string> atributos,
+                                    int indice_atributo,
+                                    vector<string> personajes,
+                                    vector<bool> personajes_restantes,
+                                    vector<vector<bool>> tablero);
+
+
 public:
 	/**
 	  * @brief Constructor básico de la clase
