@@ -23,7 +23,18 @@ mayor parte de la sintaxis de Doxygen para comentar código en su
 
 # Introducción
 
-A RELLENAR POR EL ESTUDIANTE
+Mohamed Habbat
+Igor Bothukhov
+
+Tarea 2: inicio del juego 
+- void iniciar_juego()
+- Con una ejecución normal del juego, se puede comprobar que la función funciona correctamente al mover el nodo de la jugada actual en la dirección asignada por el usuario.
+- Si se responde "Si" a una pregunta, se mueve el nodo de la jugada actual a la izquierda. Respondiendo "NO" se mueve a la derecha.
+
+Tarea 3: informacion de la jugada actual
+- set<string> informacion_jugada(bintree<Pregunta>::node jugada_actual)
+- Esta función se utiliza para saber que personajes deberían seguir teniendo su icono mostrado por pantalla como personajes restantes.
+-
 
 # Ejecutables
 
