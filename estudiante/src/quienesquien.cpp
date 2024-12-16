@@ -460,11 +460,16 @@ void QuienEsQuien::iniciar_juego(){
     	
     	cin >> respuesta;
     	
-    	if ( respuesta == "Si" && !jugada_actual.left().null()) 
+    	if ( respuesta == "Si" && !jugada_actual.left().null()){
     		jugada_actual = jugada_actual.left();
-    	else if ( respuesta == "NO" && !jugada_actual.right().null() ) 
+    	}
+    	else if ( respuesta == "No" && !jugada_actual.right().null() ){
     		jugada_actual = jugada_actual.right();
+    	}
     	
+        cout << "\n---------------------------------------------------------\n";
+    	cout << preguntas_formuladas(jugada_actual);
+        cout << "---------------------------------------------------------\n\n";
     }
     
     // Paso 3
@@ -740,11 +745,29 @@ void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas,
 	}
 }
 
+string QuienEsQuien::preguntas_formuladas(bintree<Pregunta>::node jugada){
+    vector<string> history;
 
+    while (!jugada.parent().null()) {
+        auto padre = jugada.parent();
+        string respuesta;
 
+        if (padre.left() == jugada){
+            respuesta = "si";
+        }else{
+            respuesta = "no";
+        }
+        
+        Pregunta pregunta_padre = *padre;
+        history.push_back(pregunta_padre.obtener_pregunta() + " - " + respuesta);
 
+        jugada = padre;
+    }
+   
+    string descripcion = "El personaje oculto tiene las siguientes caracteristicas:\n";
+    for (auto it = history.rbegin(); it != history.rend(); ++it) {
+        descripcion += *it + "\n";
+    }
 
-
-
-
-
+    return descripcion;    
+}

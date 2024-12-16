@@ -265,6 +265,8 @@ public:
 
     void eliminar_nodos_redundantes(bintree<Pregunta>::node nodo, bintree<Pregunta>& arbol);
 
+    string preguntas_formuladas(bintree<Pregunta>::node jugada);
+
 };
 
 #endif
