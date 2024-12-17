@@ -90,6 +90,12 @@ private:
      */
     bool modo_graph;
 
+    /**
+     * @brief si_arbol_inteligente flag que indica si un arbol es inteligente o no
+     */
+
+    bool si_arbol_inteligente;
+
 
 	/**
 	  * @brief Esta es una propuesta de cabecera de la función para crear el arbol.
@@ -247,6 +253,12 @@ public:
      * @param m: True si se desea modo grafico false solo texto
      */
     void setModoGraph(bool m);
+
+    /**
+     * @brief setArbolInteligente Modifica el si_arbol_inteligente
+     * @param i: True si se desea si_arbol_inteligente true o false 
+     */
+    void setArbolInteligente(bool i);
 
      /**
      * @brief Oculta en el tablero grafico los personajes que no estan activos

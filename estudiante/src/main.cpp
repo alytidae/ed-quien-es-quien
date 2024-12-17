@@ -16,6 +16,15 @@ int main(int argc, char * argv[]){
     QApplication a(argc, argv);
 
 	
+	char elec;
+	cout << "¿Qué árbol quieres elegir, inteligente o normal?\n";
+	cout << "Su elección(I,N): ";
+	cin >> elec;
+
+	if (elec == 'I'){
+		quienEsQuien.setArbolInteligente(1);
+	}
+	
    if(argc == 1){
         cout<<"Los parametro son:"<<endl;
         cout <<"1.- el fichero con los datos del juego" << endl;
@@ -108,6 +117,8 @@ int main(int argc, char * argv[]){
 	cout << "Profundidad promedio de las hojas del arbol: ";
 	cout << quienEsQuien.profundidad_promedio_hojas()<<endl; 
 	cout << "======================================" << endl << endl << endl;
+
+	
 	int r=0;
 	if(jugar){
 

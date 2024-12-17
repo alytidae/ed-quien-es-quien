@@ -433,8 +433,13 @@ bintree<Pregunta> QuienEsQuien::crear_arbol(){
           personajes_restantes.push_back(true);
      }
 
-     return crear_arbol( this->atributos, indice_atributo, this->personajes,
-                         personajes_restantes, this->tablero);
+     if (!si_arbol_inteligente){
+        cout << "Ha creado un arbol normal\n";
+        return crear_arbol( this->atributos, indice_atributo, this->personajes,personajes_restantes, this->tablero);
+     }else{
+        cout << "Ha creado un arbol inteligente\n";
+        return crear_arbol_inteligente( this->atributos, indice_atributo, this->personajes,personajes_restantes, this->tablero);
+     }
 }
 
 void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
@@ -634,6 +639,11 @@ void QuienEsQuien::setImagenOcultar(const char * n){
 void QuienEsQuien::setModoGraph(bool m){
     modo_graph=m;
 }
+
+void QuienEsQuien::setArbolInteligente(bool i){
+    si_arbol_inteligente = i;
+}
+
 
 void QuienEsQuien::elimina_personaje(string nombre) {
 	int indice = -1;
