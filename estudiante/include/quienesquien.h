@@ -270,7 +270,9 @@ public:
       * @brief Aniade un personaje al arbol sin rehacerlo completo.
       
       */
-    void aniade_personaje(string nombre, vector<bool> caracteristicas, 
+    void aniade_personaje(string nombre, vector<bool> caracteristicas, string nombre_imagen_personaje="");
+    	
+    void aniade_personaje_auxiliar(string nombre, vector<bool> caracteristicas, 
     	bintree<Pregunta>::node n, string nombre_imagen_personaje="");
     	
     void elimina_personaje(string nombre);

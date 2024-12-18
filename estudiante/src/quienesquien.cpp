@@ -447,7 +447,11 @@ void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
 }
 
 void QuienEsQuien::iniciar_juego(){
-     //TODO :D:D
+     //TODO
+     
+     // elimino un personaje
+     //elimina_personaje(personajes[personajes.size() - 1]);
+     
     Ventana v(tg,con,"WisW");
     if (modo_graph){
         v.show();
@@ -711,7 +715,13 @@ void QuienEsQuien::elimina_personaje(string nombre) {
 	else arbol.insert_right(n.parent().parent(),nuevo_arbol);
 }
 
-void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje ) {
+void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas, string nombre_imagen_personaje ) {
+	bintree<Pregunta>::node n = arbol.root();
+	
+	aniade_personaje_auxiliar(nombre, caracteristicas, n, nombre_imagen_personaje);
+}
+
+void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje ) {
 	
 	//bintree<Pregunta>::node n = arbol.root();
 
@@ -770,9 +780,9 @@ void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas,
 			if ( (*n).obtener_pregunta() == atributos[i] ) indice = i;
 		
 		if (caracteristicas[indice]) 
-			aniade_personaje(nombre,caracteristicas,
+			aniade_personaje_auxiliar(nombre,caracteristicas,
 						n.left(), nombre_imagen_personaje);
-		else aniade_personaje(nombre,caracteristicas,
+		else aniade_personaje_auxiliar(nombre,caracteristicas,
 						n.right(), nombre_imagen_personaje);
 	}
 }

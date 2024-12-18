@@ -35,6 +35,20 @@ Tarea 3: informacion de la jugada actual
 - set<string> informacion_jugada(bintree<Pregunta>::node jugada_actual)
 - Esta función se utiliza para saber que personajes deberían seguir teniendo su icono mostrado por pantalla como personajes restantes.
 -
+Tarea 4: profundidad promedio de las hojas
+- float QuienEsQuien::profundidad_promedio_hojas()
+  list<int> recursion_auxiliar( bintree<Pregunta>::node n)
+- De manera no grafica, en la terminal se puede visualizar los resultados de esta funcion debajo de cada arbol.
+- Como con cada hoja del arbol aparece consigo la profundidad del nodo, se puede calcular a mano la profundidad promedio y comprobar que cumple con el resultado devuelto por la función.
+
+Tarea 8: aniadir personaje al arbol
+- void aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje="");
+  void aniade_personaje_auxiliar(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje="");
+- En una ejecución de terminal, 
+
+Tarea 9: eliminacion de un personaje del arbol
+- void elimina_personaje(string nombre)
+- 
 
 # Ejecutables
 
