@@ -459,11 +459,16 @@ void QuienEsQuien::iniciar_juego(){
     
     // Paso 2
     while ( !jugada_actual.null() && (*jugada_actual).obtener_num_personajes() != 1 ) {
-    	cout << (*jugada_actual) << endl;
-    	
     	string respuesta = "";
     	
-    	cin >> respuesta;
+    	if ( modo_graph ) {
+    		con->WriteText((*jugada_actual).obtener_pregunta());
+    		respuesta = con->ReadString();
+    	}	
+    	else {
+    		cout << (*jugada_actual) << endl;
+    		cin >> respuesta;
+    	}
     	
     	if ( respuesta == "Si" && !jugada_actual.left().null()){
     		jugada_actual = jugada_actual.left();
@@ -472,17 +477,34 @@ void QuienEsQuien::iniciar_juego(){
     		jugada_actual = jugada_actual.right();
     	}
     	
-        cout << "\n---------------------------------------------------------\n";
-    	cout << preguntas_formuladas(jugada_actual);
-        cout << "---------------------------------------------------------\n\n";
+    	if ( modo_graph ) {
+    		//con->WriteText("\n---------------------------------------------------------\n");
+    		//string resumen = preguntas_formuladas(jugada_actual);
+    		//con->WriteText(resumen);
+    		//con->WriteText("---------------------------------------------------------\n\n");
+    		
+    		ocultar_personajes_graph(informacion_jugada(jugada_actual));
+    	}
+    	else {
+		cout << "\n---------------------------------------------------------\n";
+	    	cout << preguntas_formuladas(jugada_actual);
+		cout << "---------------------------------------------------------\n\n";
+	}
     }
     
     // Paso 3
-    cout << "Nombre del personaje: " 
-         << (*jugada_actual).obtener_personaje() << endl;
+    if ( modo_graph ) {
+    	    con->WriteText("Nombre del personaje: ");
+    	    con->WriteText((*jugada_actual).obtener_personaje());
+    	    con->WriteText("\n");
+    }
+    else {
+	    cout << "Nombre del personaje: " 
+		 << (*jugada_actual).obtener_personaje() << endl;
+    }
     
+    // Para no cerrar de manera abrupta, se deja 
     if (modo_graph){
-     con->WriteText("Cuando completes QuienEsQuien, este mensaje lo podrás quitar");
      char c;
      do{
         con->WriteText("Pulsa 0 para salir");
