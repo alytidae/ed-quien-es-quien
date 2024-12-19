@@ -448,9 +448,8 @@ void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
 
 void QuienEsQuien::iniciar_juego(){
      //TODO
-     
      // elimino un personaje
-     //elimina_personaje(personajes[personajes.size() - 1]);
+     //elimina_personaje("Juan");
      
     Ventana v(tg,con,"WisW");
     if (modo_graph){
@@ -702,17 +701,18 @@ void QuienEsQuien::elimina_personaje(string nombre) {
 	
 	// si el nodo estaba a la izq., el nuevo padre esta a la dcha.
 	// y viceversa.
+	/*
 	if ( caracteristicas[indice] ) nueva_pregunta = nueva_pregunta.right();
 	else nueva_pregunta = nueva_pregunta.left();
+	*/
 	
-	// subarbol nuevo con el nuevo padre
-	bintree<Pregunta> nuevo_arbol;
-	arbol.assign_subtree(nuevo_arbol,nueva_pregunta);
+	bintree<Pregunta> arbol_nulo;
 	
-	// insercion del subarbol
-	if ( indice > 0 && caracteristicas[indice-1]) 
-		arbol.insert_left(n.parent().parent(),nuevo_arbol);
-	else arbol.insert_right(n.parent().parent(),nuevo_arbol);
+	if ( caracteristicas[indice] ) arbol.prune_left(nueva_pregunta, arbol_nulo);
+	else arbol.prune_right(nueva_pregunta, arbol_nulo);
+	
+	// elimina las preguntas innecesarias
+	eliminar_nodos_redundantes();
 }
 
 void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas, string nombre_imagen_personaje ) {
@@ -771,8 +771,14 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 			nuevo_arbol.insert_right(nuevo, (*nuevo));
 		}
 		
+		bintree<Pregunta> copia(arbol);
+		
 		if (lado) arbol.insert_right(father, nuevo_arbol);
 		else arbol.insert_left(father, nuevo_arbol);
+		
+		personajes.push_back(nombre);
+		tablero.push_back(caracteristicas);
+		
 	} else { // Paso 3
 		int indice = -1;
 		
@@ -780,10 +786,9 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 			if ( (*n).obtener_pregunta() == atributos[i] ) indice = i;
 		
 		if (caracteristicas[indice]) 
-			aniade_personaje_auxiliar(nombre,caracteristicas,
-						n.left(), nombre_imagen_personaje);
-		else aniade_personaje_auxiliar(nombre,caracteristicas,
-						n.right(), nombre_imagen_personaje);
+			aniade_personaje_auxiliar(nombre,caracteristicas, n.left(), nombre_imagen_personaje);
+		else
+			aniade_personaje_auxiliar(nombre,caracteristicas, n.right(), nombre_imagen_personaje);
 	}
 }
 

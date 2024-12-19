@@ -67,6 +67,9 @@ int main(int argc, char * argv[]){
 			f>> quienEsQuien;
 			jugar = true;
 		}
+		
+		
+	    	
 	} else if(argc == 3 ){
 		string parametroLimpiar = "limpiar";
 		if(parametroLimpiar== argv[2]){
@@ -102,6 +105,10 @@ int main(int argc, char * argv[]){
         cout << "\t Jugar en Modo Grafico : ./bin/quiensquien ./datos/personajes_graficos.csv ./datos/Tapada.png"<<endl;
 		return 1;
 	}
+	
+	// aniado personaje
+	//vector<bool> caracteristicas = {0,1,1,0,0};
+	//quienEsQuien.aniade_personaje("Gabriel",caracteristicas);
 	
 	cout << "=========== Arbol en crudo ===========" << endl;
 	quienEsQuien.escribir_arbol_completo();

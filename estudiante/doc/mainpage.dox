@@ -50,6 +50,11 @@ Tarea 9: eliminacion de un personaje del arbol
 - void elimina_personaje(string nombre)
 - 
 
+Tarea 10: adición del modo gráfico
+- void iniciar_juego() modificado.
+- ./bin/quienesquien ./datos/personajes_graficos.csv ./datos/Tapada.png
+- Se debería iniciar una ventana pequeña con las caras de los personajes donde se puede jugar.
+
 # Ejecutables
 
 
