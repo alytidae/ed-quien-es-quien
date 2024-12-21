@@ -44,7 +44,8 @@ Tarea 4: profundidad promedio de las hojas
 Tarea 8: aniadir personaje al arbol
 - void aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje="");
   void aniade_personaje_auxiliar(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje="");
-- En una ejecución de terminal, 
+- ./bin/quienesquien ./datos/personajes-1.csv
+- Debe añadirse Gabriel junto a Juan, como aparece en el ejemplo de la diapositiva. Selecciona No, No, No para encontrar al final a Gabriel.
 
 Tarea 9: eliminacion de un personaje del arbol
 - void elimina_personaje(string nombre)

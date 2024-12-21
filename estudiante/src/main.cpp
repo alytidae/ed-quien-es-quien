@@ -106,9 +106,13 @@ int main(int argc, char * argv[]){
 		return 1;
 	}
 	
-	// aniado personaje
-	//vector<bool> caracteristicas = {0,1,1,0,0};
-	//quienEsQuien.aniade_personaje("Gabriel",caracteristicas);
+	// aniado personaje, a Gabriel, como aparece en el ejemplo
+	if ( argc == 2 && strcmp(argv[1],"datos/personajes-1.csv") ) {
+		vector<bool> caracteristicas = {0,1,0,1};
+		quienEsQuien.aniade_personaje("Gabriel",caracteristicas);
+	}
+	
+	
 	
 	cout << "=========== Arbol en crudo ===========" << endl;
 	quienEsQuien.escribir_arbol_completo();

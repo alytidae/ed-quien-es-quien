@@ -448,8 +448,6 @@ void QuienEsQuien::usar_arbol(bintree<Pregunta> arbol_nuevo){
 
 void QuienEsQuien::iniciar_juego(){
      //TODO
-     // elimino un personaje
-     //elimina_personaje("Juan");
      
     Ventana v(tg,con,"WisW");
     if (modo_graph){
@@ -724,6 +722,11 @@ void QuienEsQuien::aniade_personaje(string nombre, vector<bool> caracteristicas,
 void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje ) {
 	
 	//bintree<Pregunta>::node n = arbol.root();
+	
+	if ( (*n).es_pregunta() ) 
+		cout << "Ejecuta" << (*n).obtener_pregunta() << endl;
+	else
+		cout << "Ejecuta" << (*n).obtener_personaje() << endl;
 
 	// Paso 1
 	if (n.null()) {
@@ -732,6 +735,8 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 		return;
 	} // Paso 2
 	else if (n.left().null() && n.right().null() && (*n).es_personaje()) {
+		
+		cout << "Llega aqui" << endl;
 		
 		int indice = -1; // indice para encontrar al vector de n
 		
@@ -743,19 +748,26 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 		
 		vector<bool> car_per = tablero[indice];
 		
+		cout << "Aqui tambien " << indice << endl;
+		
 		indice = -1; // indice ahora es para la pregunta
 		
 		// se asume mismo tamanio
 		for ( int i = 0; i < car_per.size() && indice == -1; i++) {
-			if ( car_per[i] != caracteristicas[i] )
+			if ( car_per[i] != caracteristicas[i] && 
+				atributos[i] != (*(n.parent())).obtener_pregunta() )
 				indice = i;
 		}
+		
+		cout << "Otra vez " << indice << " " << car_per[indice] << endl;
 		
 		Pregunta pregunta_distinta(atributos[indice],2); // 2 por defecto
 		
 		bintree<Pregunta> nuevo_arbol(pregunta_distinta);
 		bintree<Pregunta>::node nuevo(Pregunta(nombre,1)),
 					father(n.parent());
+					
+		cout << (*nuevo) << endl;
 					
 		int lado = -1; // 0 -> izq. 1 -> dcha.
 		
@@ -764,20 +776,24 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 		
 		// insertamos hijos izquierda y derecha
 		if ( car_per[indice] ) {
-			nuevo_arbol.insert_right(n,(*n));
-			nuevo_arbol.insert_left(nuevo, (*nuevo));
+			nuevo_arbol.insert_left(nuevo_arbol.root(),(*n));
+			nuevo_arbol.insert_right(nuevo_arbol.root(), (*nuevo));
 		} else {
-			nuevo_arbol.insert_left(n,(*n));
-			nuevo_arbol.insert_right(nuevo, (*nuevo));
+			nuevo_arbol.insert_right(nuevo_arbol.root(),(*n));
+			nuevo_arbol.insert_left(nuevo_arbol.root(), (*nuevo));
 		}
 		
-		bintree<Pregunta> copia(arbol);
+		cout << "Aqui otra vez " << (*nuevo_arbol.root()) << endl;
 		
-		if (lado) arbol.insert_right(father, nuevo_arbol);
-		else arbol.insert_left(father, nuevo_arbol);
+		//bintree<Pregunta> copia(arbol);
+		
+		if (lado) arbol.insert_right(n.parent(), nuevo_arbol);
+		else arbol.insert_left(n.parent(), nuevo_arbol);
 		
 		personajes.push_back(nombre);
 		tablero.push_back(caracteristicas);
+		
+		cout << "Por ultimo " << (*n.parent()) << endl;
 		
 	} else { // Paso 3
 		int indice = -1;
@@ -786,7 +802,7 @@ void QuienEsQuien::aniade_personaje_auxiliar(string nombre, vector<bool> caracte
 			if ( (*n).obtener_pregunta() == atributos[i] ) indice = i;
 		
 		if (caracteristicas[indice]) 
-			aniade_personaje_auxiliar(nombre,caracteristicas, n.left(), nombre_imagen_personaje);
+			aniade_personaje_auxiliar(nombre,caracteristicas, n.right(), nombre_imagen_personaje);
 		else
 			aniade_personaje_auxiliar(nombre,caracteristicas, n.right(), nombre_imagen_personaje);
 	}
