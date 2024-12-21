@@ -110,8 +110,10 @@ int main(int argc, char * argv[]){
 	if ( argc == 2 && strcmp(argv[1],"datos/personajes-1.csv") ) {
 		vector<bool> caracteristicas = {0,1,0,1};
 		quienEsQuien.aniade_personaje("Gabriel",caracteristicas);
+		
+		// tambien elimina a Ana, en el otro extremo
+		quienEsQuien.elimina_personaje("Ana");
 	}
-	
 	
 	
 	cout << "=========== Arbol en crudo ===========" << endl;

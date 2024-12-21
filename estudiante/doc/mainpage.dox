@@ -49,7 +49,10 @@ Tarea 8: aniadir personaje al arbol
 
 Tarea 9: eliminacion de un personaje del arbol
 - void elimina_personaje(string nombre)
-- 
+- ./bin/quienesquien ./datos/personajes-1.csv
+- Ana debería ser eliminada.
+
+Inciso: Como el programa utiliza varias hebras, no me permite preguntarle al usuario que jugador eliminar o cual añadir, por lo que lo trato de hacer con ejemplos arbitrarios. En sospecha de haber escrito el codigo de las 2 funciones anteriores para los resultados esperados, puede revisar el codigo y verá que sigue los pasos bien definidos en las diapositivas y funciona para cualquier input.
 
 Tarea 10: adición del modo gráfico
 - void iniciar_juego() modificado.
