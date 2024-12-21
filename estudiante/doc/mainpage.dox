@@ -26,6 +26,11 @@ mayor parte de la sintaxis de Doxygen para comentar código en su
 Mohamed Habbat
 Igor Botukhov
 
+Tarea 1: crear_árbol()
+- bintree<Pregunta> QuienEsQuien::crear_arbol(vector<string> atributos, int indice_atributo, vector<string> personajes, vector<bool> personajes_restantes, vector<vector<bool>> tablero);
+- En un archivo determinado, construye un árbol de todas las opciones de preguntas y respuestas
+- El algoritmo consiste en la ejecución recursiva de esta función hasta que revisemos todas las preguntas
+
 Tarea 2: inicio del juego 
 - void iniciar_juego()
 - Con una ejecución normal del juego, se puede comprobar que la función funciona correctamente al mover el nodo de la jugada actual en la dirección asignada por el usuario.
@@ -40,6 +45,20 @@ Tarea 4: profundidad promedio de las hojas
   list<int> recursion_auxiliar( bintree<Pregunta>::node n)
 - De manera no grafica, en la terminal se puede visualizar los resultados de esta funcion debajo de cada arbol.
 - Como con cada hoja del arbol aparece consigo la profundidad del nodo, se puede calcular a mano la profundidad promedio y comprobar que cumple con el resultado devuelto por la función.
+
+Tarea 5: eliminar_nodos_redundantes()
+- void QuienEsQuien::eliminar_nodos_redundantes(bintree<Pregunta>::node nodo, bintree<Pregunta>& arbol)
+- Elimina las preguntas que no se harán reduciendo el tamaño del árbol
+- El algoritmo recorre recursivamente todo el árbol y ver si cada raíz tiene nodos a la izquierda y a la derecha y si no lo hace, hace que uno de esos nodos sea la raíz.
+
+Tarea 6: Inteligencia de la máquina
+- bintree<Pregunta> QuienEsQuien::crear_arbol_inteligente(vector<string> atributos, int indice_atributo, vector<string> personajes, vector<bool> personajes_restantes, vector<vector<bool>> tablero);
+- El algoritmo hace pasos muy similares a los de la función crear_arbol (), pero agrega una función que calcula la entropía y, en su dependencia, agrega preguntas más altas o más bajas.
+- Para ejecutar este algoritmo al iniciar el programa, debe responder con la letra "I" a la pregunta si queremos usar esta función
+
+Tarea 7: Preguntas Formuladas
+- string preguntas_formuladas(bintree<Pregunta>::node jugada);
+- Una pequeña función que nos muestra qué preguntas ya hemos respondido en función del nodo actual en el que estamos
 
 Tarea 8: aniadir personaje al arbol
 - void aniade_personaje(string nombre, vector<bool> caracteristicas, bintree<Pregunta>::node n, string nombre_imagen_personaje="");
